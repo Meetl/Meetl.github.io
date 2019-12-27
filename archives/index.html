@@ -346,6 +346,47 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/28/easy-tornado/" >
+            
+                <span>easy_tornado</span>
+        </a>
+        <div class="abstract-content">
+            easy_tornadoSSTI(服务器模板注入)
+关于模板注入这篇文章强推
+ https://www.jianshu.com/p/aef2ae0498df 
+
+
+
+访问页面,要做什么相当清楚
+构造filename= /fllllllllllllag&amp;filehash=md5(cookie_secret+md5(filename))
+爆破cookie_secret是不可能的，要想办法拿到cookie_secret
+尝试直接修改filename=/fllllllllllllag发现报错
+
+随便输了一下发现存在模板注入
+上网搜索关于tornado框架和cooike_secret，了解...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/28</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "BUUCTF web">BUUCTF web</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/12/28/PHP无参数命令执行/" >
             
                 <span>PHP无参数命令执行</span>
@@ -592,9 +633,18 @@ for i in range (1,2000):
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 3
+        Total : 4
         </div>
         <!-- search  -->
         
@@ -607,6 +657,11 @@ for i in range (1,2000):
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/28</span><a class="archive-post-title" href= "/2019/12/28/easy-tornado/" >easy_tornado</a>
+        </li>
     
     
         <li class="archive-post-item">
